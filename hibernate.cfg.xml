@@ -11,6 +11,10 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/databaseName?useUnicode=true&amp;characterEncoding=UTF-8</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
+
+        <!-- create, update, validate (default), create-drop -->
+        <property name="hbm2ddl.auto">create</property>
+        
         <!--
             MASSIVELY speeds up startup time of the application.
             See: https://stackoverflow.com/a/10109005
@@ -23,9 +27,13 @@
         <!-- The second level cache implementation. -->
         <property name="hibernate.cache.region.factory_class">jcache</property>
         <property name="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</property>
-        <!-- TODO: <property name="hibernate.javax.cache.uri">ehcache.xml</property> -->
         <property name="hibernate.cache.use_second_level_cache">true</property>
-        <property name="hibernate.cache.use_query_cache">true</property>
+
+        <!-- placed on the classpath (note: "classpath:ehcache.xml" does not work! -->
+        <property name="hibernate.javax.cache.uri">ehcache.xml</property>
+        <!-- Enable it if we are not configuring the ehcache.xml -->
+        <!-- <property name="hibernate.cache.use_query_cache">true</property> -->
+        
         <!-- To control the caching of all the newly inserted instances (good to have for batch insertions) -->
         <property name="hibernate.jdbc.batch_size">50</property>
 
@@ -41,6 +49,8 @@
         <property name="hibernate.c3p0.aquire_increment">2</property>
         <property name="hibernate.c3p0.idle_test_period">300</property>
 
+        <!-- mappings must be placed after properties -->
+        <mapping class="com.myapp.model.User"/>
     </session-factory>
 
 </hibernate-configuration>
