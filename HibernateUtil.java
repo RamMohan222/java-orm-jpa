@@ -29,7 +29,7 @@ public final class HibernateUtil {
         final Iterable<Class<? extends Persistable>> entities = Arrays.asList(User.class);
 
         try {
-            final Configuration configuration = new Configuration().configure();
+            final Configuration configuration = new Configuration().configure(); // from hibernate.cfg.xml
             for (final Class<?> clazz : entities) {
                 configuration.addAnnotatedClass(clazz);
             }
@@ -219,4 +219,19 @@ public final class HibernateUtil {
         throw new UnsupportedOperationException();
     }
 
+    /* This method is not belogs to this utils class, another way of creating SessionFactory with MetadataSources */
+    private SessionFactory createSessionFactory() throws Exception {
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // from hibernate.cfg.xml
+                .build();
+
+        SessionFactory sessionFactory = null;
+        try {
+            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        } catch (Exception e) {
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        return sessionFactory;
+    }
+    
 }
