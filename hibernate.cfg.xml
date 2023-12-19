@@ -50,7 +50,7 @@
         <property name="hibernate.c3p0.idle_test_period">300</property>
 
         <!-- mappings must be placed after properties -->
-        <mapping class="com.myapp.model.User"/>
+        <mapping class="com.myapp.model.Person"/>
     </session-factory>
 
 </hibernate-configuration>
